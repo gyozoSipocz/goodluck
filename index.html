@@ -151,7 +151,7 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
     <section class="panel" aria-labelledby="entrants-label">
       <div class="label"><span id="entrants-label">Entrants</span><span id="count">0 names</span></div>
       <textarea id="names" spellcheck="false" aria-describedby="names-hint"></textarea>
-      <p class="hint" id="names-hint">Duplicates and blank lines are ignored. <span class="example-tag" id="example-tag">Example names</span></p>
+      <p class="hint" id="names-hint">Duplicates and blank lines are ignored. <span class="example-tag" id="example-tag">Default list</span></p>
       <div class="row">
         <button type="button" id="clear">Clear list</button>
         <button type="button" id="restore" hidden>Put winners back</button>
@@ -181,7 +181,7 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 
 <script>
 (() => {
-  const EXAMPLE = ["Anna Kovács", "Bence Tóth", "Csilla Nagy", "Dávid Szabó", "Eszter Horváth", "Ferenc Varga", "Gréta Kiss", "Hanna Molnár", "István Németh", "Judit Farkas", "Kristóf Balogh", "Lilla Papp"].join("\n");
+  const EXAMPLE = ["Andras Farkas Szabo", "Antal Szecsei", "Attila Nagy", "Balazs Herwerth", "Csilla Pal", "Gabor Simon Koncz", "Gergo Zlatniczky", "Gyozo Sipocz", "Laszlo Madi", "Szabolcs Milotai", "Tamas Feher", "Timea Sanchez Prada"].join("\n");
 
   const $ = id => document.getElementById(id);
   const ta = $("names"), drawBtn = $("draw"), winnerEl = $("winner"), excludeEl = $("exclude");
@@ -189,7 +189,7 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   let drawing = false;
   let usingExample = true;
 
-  try { const saved = localStorage.getItem("draw-names"); if (saved !== null) { ta.value = saved; usingExample = false; } } catch (e) {}
+  try { const saved = localStorage.getItem("goodluck-names-v2"); if (saved !== null) { ta.value = saved; usingExample = false; } } catch (e) {}
   if (usingExample) ta.value = EXAMPLE;
 
   const parse = () => {
@@ -237,11 +237,11 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 
   ta.addEventListener("input", () => {
     usingExample = false;
-    try { localStorage.setItem("draw-names", ta.value); } catch (e) {}
+    try { localStorage.setItem("goodluck-names-v2", ta.value); } catch (e) {}
     refresh();
   });
   excludeEl.addEventListener("change", refresh);
-  $("clear").addEventListener("click", () => { ta.value = ""; usingExample = false; try { localStorage.setItem("draw-names", ""); } catch (e) {} ta.focus(); refresh(); });
+  $("clear").addEventListener("click", () => { ta.value = ""; usingExample = false; try { localStorage.setItem("goodluck-names-v2", ""); } catch (e) {} ta.focus(); refresh(); });
   $("restore").addEventListener("click", () => { excludeEl.checked = false; refresh(); });
   $("reset").addEventListener("click", () => {
     winners = []; excludeEl.checked = true;
